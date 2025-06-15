@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Ranking Futbol Argentino{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog2.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="page-header">
+  <h1><a href="{% url 'club_list' %}">Ranking Futbol Argentino</a></h1>
+</div>
+
+<div class="content">
+  {% for club in clubes %}
+    <div class="post">
+      <h2>{{ club.nombre }}</h2>
+      <p class="date">
+        
+      </p>
+
+      <p>{{ club.descripcion }}</p>
+
+      <ul>
+        <li>
+          <img src="{{ club.escudo_url }}" alt="Escudo {{ club.nombre }}">
+          {{ club.logro_destacado }}
+        </li>
+        <li>
+          <img src="{{ club.estadio_url }}" alt="Estadio de {{ club.nombre }}">
+          {{ club.descripcion_estadio }}
+        </li>
+      </ul>
+    </div>
+  {% empty %}
+    <p>No hay clubes cargados todavía.</p>
+  {% endfor %}
+</div>
+{% endblock %}
