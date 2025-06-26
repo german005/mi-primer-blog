@@ -56,7 +56,7 @@ ROOT_URLCONF = 'miSitio.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'blog2/templates'],
+        'DIRS': [BASE_DIR / 'blog2/Templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

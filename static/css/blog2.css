@@ -1,0 +1,65 @@
+/* Fondo y tipografía general */
+body {
+    padding-left: 15px;
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+}
+
+/* Cabecera */
+.page-header {
+    background-color: #0000ff;
+    margin-top: 0;
+    padding: 20px 20px 20px 40px;
+}
+.page-header h1,
+.page-header h1 a {
+    color: #ffffff;
+    font-size: 36pt;
+    text-decoration: none;
+    font-family: 'Arial', cursive;
+}
+
+/* Contenedor principal */
+.content {
+    margin-left: 40px;
+}
+
+/* Títulos y subtítulos */
+h1, h2, h3, h4 {
+    font-family: 'Arial', cursive;
+}
+
+/* Fecha de fundación */
+.date {
+    color: #828282;
+    margin-bottom: 10px;
+}
+
+/* Cada tarjeta-club */
+.post {
+    background-color: #ffffff;
+    padding: 20px;
+    margin-bottom: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, .1);
+}
+
+/* Lista interna (logro y estadio) */
+ul {
+    list-style: none;
+    padding: 0;
+}
+li {
+    display: flex;
+    align-items: center;
+    background-color: #e8f0fe;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 8px;
+}
+li img {
+    width: 40px;
+    height: 40px;
+    margin-right: 15px;
+    border-radius: 5px;
+}
