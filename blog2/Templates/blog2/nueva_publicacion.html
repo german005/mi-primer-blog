@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Nueva Publicación{% endblock %}
+
+{% block content %}
+  <h1>Nueva Publicación</h1>
+
+  {% if form.errors %}
+    <div style="color:red;">
+      {{ form.errors }}
+    </div>
+  {% endif %}
+
+  <form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Guardar</button>
+  </form>
+{% endblock %}

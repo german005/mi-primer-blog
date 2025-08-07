@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Detalle del Club{% endblock %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/blog2.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="post">
+  <h1>{{ publicacion.nombre }}</h1>
+  <p><strong>Autor:</strong> {{ publicacion.autor.username }}</p>
+  <p>{{ publicacion.descripcion }}</p>
+
+  <h3>Estadio:</h3>
+  <img src="{{ publicacion.estadio_url }}" alt="Estadio de {{ publicacion.nombre }}">
+  <p>{{ publicacion.descripcion_estadio }}</p>
+
+  <h3>Logro destacado:</h3>
+  <img src="{{ publicacion.escudo_url }}" alt="Escudo de {{ publicacion.nombre }}">
+  <p>{{ publicacion.logro_destacado }}</p>
+</div>
+
+<hr>
+
+<div class="comentarios">
+  <h2>Comentarios:</h2>
+  {% if comentarios %}
+    <ul>
+      {% for comentario in comentarios %}
+        <li>
+          <strong>{{ comentario.autor.username }}</strong> ({{ comentario.fecha_creacion|date:"d/m/Y H:i" }}):<br>
+          {{ comentario.texto }}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>Aún no hay comentarios.</p>
+  {% endif %}
+</div>
+
+<hr>
+
+{% if user.is_authenticated %}
+  <div class="comentario-form">
+    <h3>Agregar un comentario:</h3>
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">Publicar</button>
+    </form>
+  </div>
+{% else %}
+  <p>Iniciá sesión para comentar.</p>
+{% endif %}
+{% endblock %}

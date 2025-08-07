@@ -1,5 +1,8 @@
+
 {% extends "base.html" %}
 {% load static %}
+
+<h1 style="color:red; font-size:40px;">PRUEBA - ESTE ES EL TEMPLATE CORRECTO</h1>
 
 {% block title %}Ranking Futbol Argentino{% endblock %}
 
@@ -8,18 +11,44 @@
 {% endblock %}
 
 {% block content %}
-<div class="page-header">
-  <h1><a href="{% url 'club_list' %}">Ranking Futbol Argentino</a></h1>
+<div style="border:3px solid red; padding:15px; background:yellow;">
+    <h1 style="display:inline; margin-right:30px;">
+        🏆 Ranking Futbol Argentino
+    </h1>
+    <a href="{% url 'nueva_publicacion' %}" 
+       style="background:green; color:white; padding:10px; text-decoration:none; font-weight:bold;">
+        ➕ Nueva Publicación
+    </a>
 </div>
+
+{% if user.is_authenticated %}
+  <div style="margin-bottom: 20px;">
+    <a href="{% url 'nueva_publicacion' %}" class="btn btn-success">+ Agregar nuevo club</a>
+  </div>
+{% endif %}
+
+
+{% if usuarioActivo.is_authenticated %}
+  <p>Bienvenido, <strong>{{ usuarioActivo.username }}</strong></p>
+{% else %}
+  <p>No ha iniciado sesión. <a href="{% url 'admin:index' %}">Iniciar Sesión</a></p>
+{% endif %}
+
 
 <div class="content">
   {% for club in clubes %}
     <div class="post">
-      <h2>{{ club.nombre }}</h2>
-      <p class="date">
-        
-      </p>
+      <h2>
+      {{ club.nombre }}
+      {% if usuarioActivo.id == club.autor.id %}
+    <a href="{% url 'editar_club' pk=club.pk %}"
+       style="margin-left:10px; font-size:16px; background:#eee; padding:3px 6px; text-decoration:none; border-radius:5px;">
+       ✏️ Editar
+    </a>
+  {% endif %}
+</h2>
 
+      <p class="date"></p>
       <p>{{ club.descripcion }}</p>
 
       <ul>
@@ -38,3 +67,4 @@
   {% endfor %}
 </div>
 {% endblock %}
+
