@@ -40,8 +40,8 @@
     <div class="post">
       <h2>
       {{ club.nombre }}
-      {% if usuarioActivo.id == club.autor.id %}
-    <a href="{% url 'editar_club' pk=club.pk %}"
+      {% if user.is_authenticated and user.id == club.autor.id %}
+      <a href="{% url 'editar_club' pk=club.pk %}"
        style="margin-left:10px; font-size:16px; background:#eee; padding:3px 6px; text-decoration:none; border-radius:5px;">
        ✏️ Editar
     </a>

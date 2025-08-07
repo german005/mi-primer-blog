@@ -4,11 +4,13 @@ from .forms import FormPublicacion
 from django.utils import timezone
 
 def club_list(request):
-    usuarioActivo = request.user
-    clubes = Club.objects.filter(autor=usuarioActivo, fecha_creacion__lte=timezone.now()).order_by('-fecha_creacion')
+    if request.user.is_authenticated:
+        clubes = Club.objects.filter(autor=request.user, fecha_creacion__lte=timezone.now()).order_by('-fecha_creacion')
+    else:
+        clubes = Club.objects.filter(fecha_creacion__lte=timezone.now()).order_by('-fecha_creacion')
+
     return render(request, 'blog2/club_list.html', {
-        'clubes': clubes,
-        'usuarioActivo': usuarioActivo
+        'clubes': clubes
     })
 
 def nueva_publicacion(request):
