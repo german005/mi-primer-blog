@@ -1,35 +1,32 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Club
-from .forms import FormPublicacion
+from .models import Club, Comentario
+from .forms import FormPublicacion, ComentarioForm
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
 def club_list(request):
     if request.user.is_authenticated:
         clubes = Club.objects.filter(autor=request.user, fecha_creacion__lte=timezone.now()).order_by('-fecha_creacion')
     else:
         clubes = Club.objects.filter(fecha_creacion__lte=timezone.now()).order_by('-fecha_creacion')
+    return render(request, 'blog2/club_list.html', {'clubes': clubes})
 
-    return render(request, 'blog2/club_list.html', {
-        'clubes': clubes
-    })
-
+@login_required
 def nueva_publicacion(request):
     if request.method == "POST":
         form = FormPublicacion(request.POST)
         if form.is_valid():
             publicacion = form.save(commit=False)
-            publicacion.autor = request.user  # opcional: si tu modelo tiene campo autor
+            publicacion.autor = request.user
             publicacion.save()
-            return redirect('club_list')  # redirige al listado u otra página
+            return redirect('club_list')
     else:
         form = FormPublicacion()
     return render(request, 'blog2/nueva_publicacion.html', {'form': form})
 
-from django.shortcuts import get_object_or_404
-
+@login_required
 def editar_club(request, pk):
     club = get_object_or_404(Club, pk=pk)
-
     if request.method == "POST":
         form = FormPublicacion(request.POST, instance=club)
         if form.is_valid():
@@ -39,12 +36,9 @@ def editar_club(request, pk):
             return redirect('club_list')
     else:
         form = FormPublicacion(instance=club)
-    
     return render(request, 'blog2/editar_club.html', {'form': form})
 
-from .models import Comentario
-from .forms import ComentarioForm
-
+@login_required
 def detalle_public(request, pk):
     publicacion = get_object_or_404(Club, pk=pk)
     comentarios = publicacion.comentarios.all().order_by('-fecha_creacion')
