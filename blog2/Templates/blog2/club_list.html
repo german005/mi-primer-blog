@@ -1,4 +1,3 @@
-
 {% extends "base.html" %}
 {% load static %}
 
@@ -22,31 +21,23 @@
 </div>
 
 {% if user.is_authenticated %}
-  <div style="margin-bottom: 20px;">
-    <a href="{% url 'nueva_publicacion' %}" class="btn btn-success">+ Agregar nuevo club</a>
-  </div>
-{% endif %}
-
-
-{% if usuarioActivo.is_authenticated %}
-  <p>Bienvenido, <strong>{{ usuarioActivo.username }}</strong></p>
+  <p>Bienvenido, <strong>{{ user.username }}</strong></p>
 {% else %}
   <p>No ha iniciado sesión. <a href="{% url 'admin:index' %}">Iniciar Sesión</a></p>
 {% endif %}
-
 
 <div class="content">
   {% for club in clubes %}
     <div class="post">
       <h2>
-      {{ club.nombre }}
-      {% if usuarioActivo.id == club.autor.id %}
-    <a href="{% url 'editar_club' pk=club.pk %}"
-       style="margin-left:10px; font-size:16px; background:#eee; padding:3px 6px; text-decoration:none; border-radius:5px;">
-       ✏️ Editar
-    </a>
-  {% endif %}
-</h2>
+        {{ club.nombre }}
+        {% if user.is_authenticated and user.id == club.autor.id %}
+          <a href="{% url 'editar_club' pk=club.pk %}"
+             style="margin-left:10px; font-size:16px; background:#eee; padding:3px 6px; text-decoration:none; border-radius:5px;">
+             ✏️ Editar
+          </a>
+        {% endif %}
+      </h2>
 
       <p class="date"></p>
       <p>{{ club.descripcion }}</p>
@@ -67,4 +58,5 @@
   {% endfor %}
 </div>
 {% endblock %}
+
 
